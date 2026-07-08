@@ -10906,3 +10906,15 @@
 {"ts":1783501374,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1197,"http":500,"cost":"dns=2,tcp=64,tls=148,think=982,body=0","pace":22}
 {"ts":1783501392,"source":"MAC","ad":"2","size":2,"class":"429","req_ms":281,"http":429,"cost":"dns=2,tcp=96,tls=126,think=55,body=0","pace":22}
 {"ts":1783501432,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1268,"http":500,"cost":"dns=2,tcp=51,tls=127,think=1085,body=0","pace":33}
+{"ts":1783532310,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1069,"http":500,"cost":"dns=2,tcp=41,tls=103,think=921,body=0","pace":18}
+{"ts":1783532332,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1225,"http":500,"cost":"dns=14,tcp=44,tls=119,think=1047,body=0","pace":18}
+{"ts":1783532346,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1093,"http":500,"cost":"dns=1,tcp=40,tls=135,think=915,body=0","pace":16}
+{"ts":1783532365,"source":"MAC","ad":"1","size":2,"class":"no_cap","req_ms":1068,"http":500,"cost":"dns=2,tcp=47,tls=123,think=894,body=0","pace":16}
+{"ts":1783532382,"source":"MAC","ad":"2","size":1,"class":"no_cap","req_ms":1569,"http":500,"cost":"dns=2,tcp=43,tls=116,think=1407,body=0","pace":14}
+{"ts":1783532397,"source":"MAC","ad":"3","size":2,"class":"no_cap","req_ms":948,"http":500,"cost":"dns=2,tcp=51,tls=103,think=791,body=0","pace":14}
+{"ts":1783532413,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1226,"http":500,"cost":"dns=90,tcp=43,tls=143,think=948,body=0","pace":12}
+{"ts":1783532428,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1446,"http":500,"cost":"dns=2,tcp=45,tls=125,think=1272,body=0","pace":12}
+{"ts":1783532439,"source":"MAC","ad":"3","size":1,"class":"429","req_ms":237,"http":429,"cost":"dns=2,tcp=67,tls=114,think=53,body=0","pace":12}
+{"ts":1783532458,"source":"MAC","ad":"1","size":2,"class":"429","req_ms":249,"http":429,"cost":"dns=2,tcp=45,tls=151,think=50,body=0","pace":18}
+{"ts":1783532489,"source":"MAC","ad":"2","size":1,"class":"no_cap","req_ms":1447,"http":500,"cost":"dns=2,tcp=60,tls=123,think=1260,body=0","pace":27}
+{"ts":1783532520,"source":"MAC","ad":"3","size":2,"class":"no_cap","req_ms":1318,"http":500,"cost":"dns=83,tcp=39,tls=158,think=1037,body=0","pace":27}

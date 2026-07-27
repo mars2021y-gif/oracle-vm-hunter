@@ -91572,3 +91572,14 @@
 {"ts":1785141932,"source":"MAC","ad":"3","size":2,"class":"no_cap","req_ms":1614,"http":500,"cost":"dns=2,tcp=47,tls=229,think=1336,body=0","pace":12}
 {"ts":1785141944,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1420,"http":500,"cost":"dns=2,tcp=103,tls=181,think=1133,body=0","pace":12}
 {"ts":1785141955,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1354,"http":500,"cost":"dns=2,tcp=71,tls=163,think=1116,body=0","pace":12}
+{"ts":1785149647,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1807,"http":500,"cost":"dns=2,tcp=94,tls=531,think=1177,body=0","pace":12}
+{"ts":1785149662,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1344,"http":500,"cost":"dns=4,tcp=62,tls=161,think=1116,body=0","pace":12}
+{"ts":1785149674,"source":"MAC","ad":"3","size":1,"class":"429","req_ms":342,"http":429,"cost":"dns=2,tcp=65,tls=210,think=63,body=0","pace":12}
+{"ts":1785149692,"source":"MAC","ad":"1","size":2,"class":"no_cap","req_ms":1073,"http":500,"cost":"dns=2,tcp=46,tls=143,think=881,body=0","pace":18}
+{"ts":1785149711,"source":"MAC","ad":"2","size":1,"class":"no_cap","req_ms":1507,"http":500,"cost":"dns=3,tcp=115,tls=164,think=1222,body=0","pace":18}
+{"ts":1785149727,"source":"MAC","ad":"3","size":2,"class":"no_cap","req_ms":1266,"http":500,"cost":"dns=2,tcp=75,tls=156,think=1031,body=0","pace":16}
+{"ts":1785149742,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1352,"http":500,"cost":"dns=3,tcp=53,tls=145,think=1151,body=0","pace":16}
+{"ts":1785149758,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1614,"http":500,"cost":"dns=101,tcp=54,tls=213,think=1245,body=0","pace":14}
+{"ts":1785149773,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1364,"http":500,"cost":"dns=3,tcp=54,tls=143,think=1163,body=0","pace":14}
+{"ts":1785149788,"source":"MAC","ad":"1","size":2,"class":"no_cap","req_ms":1244,"http":500,"cost":"dns=2,tcp=89,tls=206,think=945,body=0","pace":12}
+{"ts":1785149800,"source":"MAC","ad":"2","size":1,"class":"limit","req_ms":1508,"http":400,"cost":"dns=161,tcp=62,tls=160,think=1122,body=0","pace":12}

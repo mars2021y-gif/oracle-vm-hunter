@@ -353665,3 +353665,4 @@
 {"ts":1791752563,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1266,"http":500,"cost":"dns=16,tcp=74,tls=147,think=1028,body=0","pace":12}
 {"ts":1791752589,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1479,"http":500,"cost":"dns=11,tcp=66,tls=140,think=1260,body=0","pace":12}
 {"ts":1791752751,"source":"MAC","ad":"1","size":2,"class":"no_cap","req_ms":1606,"http":500,"cost":"dns=306,tcp=66,tls=132,think=1100,body=0","pace":12}
+{"ts":1791753925,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1250,"http":500,"cost":"dns=1,tcp=47,tls=193,think=1007,body=0","pace":12}

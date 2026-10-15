@@ -368514,3 +368514,4 @@
 {"ts":1792041654,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1487,"http":500,"cost":"dns=2,tcp=39,tls=119,think=1325,body=0","pace":12}
 {"ts":1792046353,"source":"MAC","ad":"1","size":1,"class":"transient","req_ms":0,"http":000,"cost":"dns=0,tcp=0,tls=0,think=0,body=0","pace":12}
 {"ts":1792052628,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1143,"http":500,"cost":"dns=1,tcp=40,tls=126,think=974,body=0","pace":12}
+{"ts":1792059934,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1228,"http":500,"cost":"dns=2,tcp=48,tls=133,think=1044,body=0","pace":12}

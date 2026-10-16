@@ -369153,3 +369153,5 @@
 {"ts":1792120469,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1139,"http":500,"cost":"dns=2,tcp=41,tls=113,think=981,body=0","pace":12}
 {"ts":1792120481,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":981,"http":500,"cost":"dns=2,tcp=42,tls=136,think=800,body=0","pace":12}
 {"ts":1792120494,"source":"MAC","ad":"1","size":2,"class":"no_cap","req_ms":1264,"http":500,"cost":"dns=2,tcp=38,tls=118,think=1104,body=0","pace":12}
+{"ts":1792120524,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1206,"http":500,"cost":"dns=2,tcp=42,tls=125,think=1035,body=0","pace":12}
+{"ts":1792120585,"source":"MAC","ad":"2","size":2,"class":"transient","req_ms":0,"http":000,"cost":"dns=0,tcp=0,tls=0,think=0,body=0","pace":12}

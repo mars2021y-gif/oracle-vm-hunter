@@ -371840,3 +371840,5 @@
 {"ts":1792272499,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1221,"http":500,"cost":"dns=1,tcp=50,tls=137,think=1032,body=0","pace":12}
 {"ts":1792275649,"source":"MAC","ad":"1","size":1,"class":"transient","req_ms":2,"http":000,"cost":"dns=0,tcp=0,tls=0,think=0,body=2","pace":12}
 {"ts":1792275686,"source":"MAC","ad":"2","size":3,"class":"limit","req_ms":1467,"http":400,"cost":"dns=166,tcp=48,tls=231,think=1021,body=0","pace":12}
+{"ts":1792278461,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1130,"http":500,"cost":"dns=1,tcp=58,tls=144,think=925,body=0","pace":12}
+{"ts":1792278652,"source":"MAC","ad":"2","size":2,"class":"transient","req_ms":176953,"http":000,"cost":"dns=1,tcp=63,tls=156,think=0,body=176953","pace":12}

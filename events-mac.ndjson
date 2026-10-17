@@ -371828,3 +371828,7 @@
 {"ts":1792255136,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1294,"http":500,"cost":"dns=16,tcp=60,tls=116,think=1101,body=0","pace":12}
 {"ts":1792264688,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1402,"http":500,"cost":"dns=1,tcp=42,tls=117,think=1239,body=0","pace":12}
 {"ts":1792264704,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1241,"http":500,"cost":"dns=5,tcp=62,tls=134,think=1039,body=0","pace":12}
+{"ts":1792267952,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1186,"http":500,"cost":"dns=1,tcp=42,tls=116,think=1024,body=0","pace":12}
+{"ts":1792268339,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1239,"http":500,"cost":"dns=1,tcp=37,tls=125,think=1073,body=0","pace":12}
+{"ts":1792268356,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":3583,"http":500,"cost":"dns=2,tcp=1059,tls=1503,think=1018,body=0","pace":12}
+{"ts":1792268368,"source":"MAC","ad":"3","size":1,"class":"no_cap","req_ms":1320,"http":500,"cost":"dns=2,tcp=41,tls=132,think=1144,body=0","pace":12}

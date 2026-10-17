@@ -371825,3 +371825,4 @@
 {"ts":1792240974,"source":"MAC","ad":"2","size":2,"class":"no_cap","req_ms":1222,"http":500,"cost":"dns=1,tcp=44,tls=141,think=1035,body=0","pace":12}
 {"ts":1792242041,"source":"MAC","ad":"3","size":1,"class":"transient","req_ms":1055259,"http":000,"cost":"dns=1,tcp=-1,tls=0,think=0,body=1055259","pace":12}
 {"ts":1792251872,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1404,"http":500,"cost":"dns=1,tcp=42,tls=116,think=1243,body=0","pace":12}
+{"ts":1792255136,"source":"MAC","ad":"1","size":1,"class":"no_cap","req_ms":1294,"http":500,"cost":"dns=16,tcp=60,tls=116,think=1101,body=0","pace":12}

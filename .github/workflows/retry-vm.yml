@@ -4,6 +4,11 @@ on:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
+# Kept workflow-level on purpose: a pending run replaced by a newer one is
+# cancelled whole (relaunch never runs), so cron + self-dispatch cannot cascade.
+# 2026-10-23: relaunch used to stall ~42 min on a `git pull` of the 64 MB
+# events-gh.ndjson, leaving the hunters idle ~90% of the time; it is now light,
+# dispatches the next generation first and is time-boxed.
 concurrency:
   group: vm-hunter
   cancel-in-progress: false
@@ -11,7 +16,7 @@ concurrency:
 jobs:
   hunt:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 17
     permissions:
       issues: write
       actions: write
@@ -24,6 +29,9 @@ jobs:
           - "gukW:EU-FRANKFURT-1-AD-3"
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: hunt.sh
+          sparse-checkout-cone-mode: false
       - name: Progressive hunt on dedicated runner IP
         shell: bash {0}
         env:
@@ -41,7 +49,7 @@ jobs:
           IMAGE: "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaa4xniimqv2um47gmhf235bwj2wm45roe55dxxwmhfzqtrm6a3ggeq"
           OCI_REGION: "eu-frankfurt-1"
           TARGET_OCPU: "4"
-          DURATION: "230"
+          DURATION: "840"
           PACE_BASE: "18"
           SOURCE: "GH"
         run: |
@@ -61,14 +69,51 @@ jobs:
     needs: hunt
     if: always()
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     permissions:
       actions: write
       contents: write
     steps:
+      - name: Chain next generation + failure alert
+        shell: bash {0}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          HUNT_RESULT: ${{ needs.hunt.result }}
+        run: |
+          set +e
+          # GitHub's API returns pretty-printed JSON: tolerate whitespace around ':'.
+          state=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$GH_REPO/actions/workflows/retry-vm.yml" \
+            | grep -o '"state"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -o '"[^"]*"$' | tr -d '"')
+          if [ "$state" = "disabled_manually" ] || [ "$state" = "disabled_inactivity" ]; then
+            echo "Workflow disabled ($state) — target reached, not relaunching."
+            exit 0
+          fi
+          DISPATCH=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GH_REPO/actions/workflows/retry-vm.yml/dispatches" \
+            -d '{"ref":"main"}')
+          if [ "$DISPATCH" != "204" ]; then
+            echo "::error::relaunch dispatch failed (HTTP $DISPATCH) — hunter chain may stop here"
+            exit 1
+          fi
+          echo "Next generation dispatched (hunt result: $HUNT_RESULT)"
+
+      # events-gh.ndjson (64 MB, read by nothing) is frozen as-is and no longer
+      # downloaded or appended — it was what stalled every relaunch.
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            stats-gh.ndjson
+            stats-mac.ndjson
+            stats_report.py
+          sparse-checkout-cone-mode: false
 
       - name: Collect STATS telemetry from the previous generation's hunt logs
         id: stats
+        timeout-minutes: 4
         shell: bash {0}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -130,24 +175,16 @@ jobs:
           echo "[stats] appended record with ${N} worker(s) from run ${PREV_RUN_ID}"
           echo "has_stats=1" >> "$GITHUB_OUTPUT"
 
-          # Same log, wider net: per-probe EVENT lines (full-latency + response
-          # class per request) for the rigorous audit — timeline reconstruction,
-          # full-cycle timing, per-worker/per-size breakdown. The dedup guard
-          # above (on stats-gh.ndjson's src_run) already prevents this whole
-          # step from re-running against an already-recorded run, so no
-          # separate dedup needed here — events and stats share one run gate.
-          echo "$LOG" | grep -o 'EVENT [0-9]* {.*}' \
-            | sed -E "s/^EVENT ([0-9]+) \{(.*)\}\$/{\"ts\":\1,\"src_run\":${PREV_RUN_ID},\2}/" >> events-gh.ndjson
-          echo "[events] appended $(echo "$LOG" | grep -c 'EVENT [0-9]* {') event(s) from run ${PREV_RUN_ID}"
 
-      - name: Commit + push stats-gh.ndjson + events-gh.ndjson
+      - name: Commit + push stats-gh.ndjson
         if: steps.stats.outputs.has_stats == '1'
+        timeout-minutes: 4
         shell: bash {0}
         run: |
           set +e
           git config user.name "vm-hunter-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add stats-gh.ndjson events-gh.ndjson
+          git add stats-gh.ndjson
 
           push_once() {
             git commit -m "stats: append GH generation telemetry [skip ci]" --quiet
@@ -156,7 +193,7 @@ jobs:
           }
 
           if push_once; then
-            echo "[stats] stats-gh.ndjson + events-gh.ndjson pushed"
+            echo "[stats] stats-gh.ndjson pushed"
           else
             echo "[stats] push failed, retrying once after rebase"
             git pull --rebase --quiet
@@ -168,6 +205,7 @@ jobs:
           fi
 
       - name: Piggyback heartbeat (mitigates flaky GH schedule cron)
+        timeout-minutes: 3
         shell: bash {0}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -239,31 +277,3 @@ jobs:
               "https://api.github.com/repos/$GH_REPO/actions/workflows/heartbeat.yml/dispatches" \
               -d '{"ref":"main"}' > /dev/null 2>&1
           fi
-
-      - name: Chain next generation + failure alert
-        shell: bash {0}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          TG_TOKEN: ${{ secrets.TG_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-          HUNT_RESULT: ${{ needs.hunt.result }}
-        run: |
-          set +e
-          # Same whitespace-tolerance fix as above (pretty-printed JSON from GitHub's API).
-          state=$(curl -s -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/$GH_REPO/actions/workflows/retry-vm.yml" \
-            | grep -o '"state"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -o '"[^"]*"$' | tr -d '"')
-          if [ "$state" = "disabled_manually" ] || [ "$state" = "disabled_inactivity" ]; then
-            echo "Workflow disabled ($state) — target reached, not relaunching."
-            exit 0
-          fi
-          sleep 15
-          DISPATCH=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/$GH_REPO/actions/workflows/retry-vm.yml/dispatches" \
-            -d '{"ref":"main"}')
-          if [ "$DISPATCH" != "204" ]; then
-            echo "::error::relaunch dispatch failed (HTTP $DISPATCH) — hunter chain may stop here"
-            exit 1
-          fi
-          echo "Next generation dispatched (hunt result: $HUNT_RESULT)"
